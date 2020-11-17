@@ -44,11 +44,11 @@ export default function Document({
 
 export function FlareactHead({ helmet, page, buildManifest }) {
   let links = new Set();
+  let criticalCss = [];
 
   if (!dev) {
-    buildManifest.pages["/_app"]
-      .filter((link) => link.endsWith(".css"))
-      .forEach((link) => links.add(link));
+    criticalCss = buildManifest.pages["criticalCss"];
+
     buildManifest.pages[page]
       .filter((link) => link.endsWith(".css"))
       .forEach((link) => links.add(link));
@@ -62,8 +62,12 @@ export function FlareactHead({ helmet, page, buildManifest }) {
       {helmet.meta.toComponent()}
       {helmet.link.toComponent()}
 
+      {[...criticalCss].map((css) => (
+        <style dangerouslySetInnerHTML={{ __html: css }} />
+      ))}
+
       {[...links].map((link) => (
-        <link href={`/_flareact/static/${link}`} rel="stylesheet" />
+        <link async href={`/_flareact/static/${link}`} rel="stylesheet" />
       ))}
     </head>
   );
