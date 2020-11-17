@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const concurrently = require("concurrently");
-const dotenv = require("dotenv");
-dotenv.config();
+
+require("dotenv-flow").config({ silent: true });
 
 ["react", "react-dom"].forEach((dependency) => {
   try {
