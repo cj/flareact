@@ -37,10 +37,16 @@ const argv = yargs
 if (argv._.includes("dev")) {
   console.log("Starting Flareact dev server...");
 
+  let wranglerDev = `wrangler dev`;
+
+  if (argv.env) {
+    wranglerDev += ` --env ${argv.env}`;
+  }
+
   concurrently(
     [
       {
-        command: "wrangler dev",
+        command: wranglerDev,
         name: "worker",
         env: { WORKER_DEV: true, IS_WORKER: true },
       },
