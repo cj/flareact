@@ -37,10 +37,15 @@ module.exports = function ({ dev, isServer }) {
     plugins: [new MiniCssExtractPlugin()],
     stats: "errors-warnings",
     resolve: {
-      extensions: [".js", ".json", ".jsx", ".ts", ".tsx"],
+      extensions: [".js", ".json", ".jsx", ".ts", ".tsx", ".mjs"],
     },
     module: {
       rules: [
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: "javascript/auto",
+        },
         {
           test: /\.(t|j)sx?$/,
           exclude: /node_modules\/(?!(flareact)\/).*/,
