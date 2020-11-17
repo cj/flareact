@@ -82,7 +82,7 @@ export function getPage(pagePath, context) {
   }
 }
 
-export async function getPageProps(page, query) {
+export async function getPageProps(page, query, event) {
   let pageProps = {};
 
   const params = page.params || {};
@@ -95,11 +95,17 @@ export async function getPageProps(page, query) {
   };
 
   if (fetcher) {
-    const { props, revalidate } = await fetcher({ params, query: queryObject });
+    const { props, revalidate, response } = await fetcher({
+      params,
+      query: queryObject,
+      event,
+      page,
+    });
 
     pageProps = {
       ...props,
       revalidate,
+      response,
     };
   }
 
