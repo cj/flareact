@@ -20,13 +20,13 @@ const isServer = false;
 const pageManifest = glob.sync("./pages/**/*.+(js|jsx|ts|tsx)");
 
 let entry = {
-  main: "flareact/src/client/index.js",
+  main: "flareact/src/client/index",
 };
 
 pageManifest.forEach((page) => {
   if (/pages\/api\//.test(page)) return;
 
-  let pageName = page.match(/\/(.+)\.(js|jsx|ts|tsx)$/)[1];
+  let pageName = page.match(/\/(.+)\.(t|j)sx?$/)[1];
 
   // Flatten any dynamic `index` pages
   if (pageName !== "pages/index" && pageName.endsWith("/index")) {

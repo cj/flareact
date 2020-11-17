@@ -17,11 +17,14 @@ export function resolvePagePath(pagePath, keys) {
       test = test.replace(DYNAMIC_PAGE, () => "([\\w_-]+)");
     }
 
-    test = test.replace("/", "\\/").replace(/^\./, "").replace(/\.(js|jsx|ts|tsx)$/, "");
+    test = test
+      .replace("/", "\\/")
+      .replace(/^\./, "")
+      .replace(/\.(t|j)sx?$/, "");
 
     return {
       page,
-      pagePath: page.replace(/^\./, "").replace(/\.(js|jsx|ts|tsx)$/, ""),
+      pagePath: page.replace(/^\./, "").replace(/\.(t|j)sx?$/, ""),
       parts,
       test: new RegExp("^" + test + "$", isDynamic ? "g" : ""),
     };
