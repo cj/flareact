@@ -67,7 +67,22 @@ export function FlareactHead({ helmet, page, buildManifest }) {
       ))}
 
       {[...links].map((link) => (
-        <link async href={`/_flareact/static/${link}`} rel="stylesheet" />
+        <>
+          <style
+            dangerouslySetInnerHTML={`
+          </style>
+          <link
+            rel="preload"
+            href="/_flareact/static/${link}"
+            as="style"
+            onLoad="this.onload=null;this.rel='stylesheet';"
+          />
+          `}
+          />
+          <noscript>
+            <link rel="stylesheet" href={`/_flareact/static/${link}`} />
+          </noscript>
+        </>
       ))}
     </head>
   );
